@@ -179,12 +179,32 @@ interface Point {
 // points
 let gameFoods: Point[] = [{ x: 10, y: 15 }];
 
+interface Wall {
+  x: number;
+  y: number;
+  body: number;
+  wallColor: string;
+}
+let customWalls: Wall[] = [{ x: 10, y: 15, body: 70, wallColor: "red" }];
+
 // game controls
 window.addEventListener("keydown", (e) => {
   if (Object.values(Direction).includes(e.key as Direction)) {
     direction = e.key as Direction;
   }
 });
+
+function renderWall() {
+  customWalls.forEach((wall) => {
+    const wallEl = document.createElement("div");
+    wallEl.classList.add("wall");
+    wallEl.style.transform = `translate(${wall.x}px, ${wall.y}px)`;
+    wallEl.style.width = `${wall.body}px`;
+    wallEl.style.height = `${wall.body}px`;
+    wallEl.style.background = `${wall.wallColor}`;
+    board?.appendChild(wallEl);
+  });
+}
 
 function renderGamePoints(arr = gameFoods) {
   // remove all foods first
@@ -255,12 +275,23 @@ function step(timestamp) {
         scoreBox.innerHTML = `${gameScore}`;
       }
 
-      // is the belley crash with wall ? ok end the game 🤕
+      // is the belley crash with outer wall ? ok end the game 🤕
       if (
         countX > frameLength - (boxSize + gameScore) ||
         countX <= 0 ||
         countY > frameLength - (boxSize + gameScore) ||
         countY <= 0
+      ) {
+        endTheGame();
+      }
+
+      // TODO: working on inner wall
+      // is the belley crash with inner wall ? ok end the game 🤕
+      if (
+        countX > customWalls[0].x + customWalls[0].body ||
+        // countX <= customWalls[0].x ||
+        countY > customWalls[0].y + customWalls[0].body
+        // countY <= customWalls[0].y
       ) {
         endTheGame();
       }
@@ -296,6 +327,8 @@ const interval = setInterval(() => {
   showGameDelay();
   // start the main game
   renderGamePoints();
+  // render the wall into game board
+  renderWall();
   startTheGame();
 }, 1000);
 

@@ -170,16 +170,32 @@ var gameScore = 0;
 var boxSize = 10;
 // points
 var gameFoods = [{ x: 10, y: 15 }];
+var customWalls = [{ x: 10, y: 15, body: 70, wallColor: "red" }];
 // game controls
 window.addEventListener("keydown", function (e) {
     if (Object.values(Direction).includes(e.key)) {
         direction = e.key;
     }
 });
+function renderWall() {
+    customWalls.forEach(function (wall) {
+        var wallEl = document.createElement("div");
+        wallEl.classList.add("wall");
+        wallEl.style.transform = "translate(".concat(wall.x, "px, ").concat(wall.y, "px)");
+        wallEl.style.width = "".concat(wall.body, "px");
+        wallEl.style.height = "".concat(wall.body, "px");
+        wallEl.style.background = "".concat(wall.wallColor);
+        board === null || board === void 0 ? void 0 : board.appendChild(wallEl);
+    });
+}
 function renderGamePoints(arr) {
     if (arr === void 0) { arr = gameFoods; }
     // remove all foods first
     removeFoods();
+    // set new game points
+    gameScore += 1;
+    var randomNumber = Math.floor(Math.random() * frameLength - 20);
+    gameFoods = [{ x: randomNumber, y: randomNumber }];
     // render new foods
     arr.forEach(function (point) {
         var foodEl = document.createElement("div");
@@ -215,9 +231,6 @@ function step(timestamp) {
             var countY_1 = Math.min(0.05 * positionY, frameLength);
             // score increase
             if (gameFoods.some(function (el) { return isBelleyEat(el, countX_1, countY_1); })) {
-                gameScore += 1;
-                var randomNumber = Math.floor(Math.random() * 400);
-                gameFoods = [{ x: randomNumber, y: randomNumber }];
                 renderGamePoints();
                 increseFat(gameScore);
                 changeBelleyBodyColor();
@@ -234,11 +247,19 @@ function step(timestamp) {
             if (scoreBox) {
                 scoreBox.innerHTML = "".concat(gameScore);
             }
-            // is the belley crash with wall ? ok end the game 🤕
+            // is the belley crash with outer wall ? ok end the game 🤕
             if (countX_1 > frameLength - (boxSize + gameScore) ||
                 countX_1 <= 0 ||
                 countY_1 > frameLength - (boxSize + gameScore) ||
                 countY_1 <= 0) {
+                endTheGame();
+            }
+            // is the belley crash with inner wall ? ok end the game 🤕
+            if (countX_1 > customWalls[0].x + customWalls[0].body ||
+                // countX <= customWalls[0].x ||
+                countY_1 > customWalls[0].y + customWalls[0].body
+            // countY <= customWalls[0].y
+            ) {
                 endTheGame();
             }
         }
@@ -269,6 +290,8 @@ var interval = setInterval(function () {
     showGameDelay();
     // start the main game
     renderGamePoints();
+    // render the wall into game board
+    renderWall();
     startTheGame();
 }, 1000);
 // game initialized
