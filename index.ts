@@ -190,6 +190,11 @@ function renderGamePoints(arr = gameFoods) {
   // remove all foods first
   removeFoods();
 
+  // set new game points
+  gameScore += 1;
+  const randomNumber = Math.floor(Math.random() * frameLength - 20);
+  gameFoods = [{ x: randomNumber, y: randomNumber }];
+
   // render new foods
   arr.forEach((point) => {
     const foodEl = document.createElement("div");
@@ -228,9 +233,6 @@ function step(timestamp) {
 
       // score increase
       if (gameFoods.some((el) => isBelleyEat(el, countX, countY))) {
-        gameScore += 1;
-        const randomNumber = Math.floor(Math.random() * 400);
-        gameFoods = [{ x: randomNumber, y: randomNumber }];
         renderGamePoints();
         increseFat(gameScore);
         changeBelleyBodyColor();
@@ -334,5 +336,18 @@ function endTheGame() {
   }
   if (box) {
     box.style.background = `red`;
+  }
+  setHighestScore();
+}
+
+function setHighestScore() {
+  const score = localStorage.getItem("fatisbadScore");
+  const maxScore = String(
+    Number(score) > gameScore ? Number(score) : gameScore
+  );
+
+  localStorage.setItem("fatisbadScore", String(maxScore));
+  if (scoreBox) {
+    return (scoreBox.innerHTML = `Highest Score: ${maxScore}`);
   }
 }

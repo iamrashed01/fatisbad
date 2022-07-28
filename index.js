@@ -303,4 +303,13 @@ function endTheGame() {
     if (box) {
         box.style.background = "red";
     }
+    setHighestScore();
+}
+function setHighestScore() {
+    var score = localStorage.getItem("fatisbadScore");
+    var maxScore = String(Number(score) > gameScore ? Number(score) : gameScore);
+    localStorage.setItem("fatisbadScore", String(maxScore));
+    if (scoreBox) {
+        return (scoreBox.innerHTML = "Highest Score: ".concat(maxScore));
+    }
 }
