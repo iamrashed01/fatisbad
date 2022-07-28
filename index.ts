@@ -157,7 +157,7 @@ const colors = [
 const board = document.getElementById("board");
 const box = document.getElementById("box");
 const title = document.getElementById("title");
-const score = document.getElementById("score");
+const scoreBox = document.getElementById("score");
 const playButton = document.getElementById("play");
 const stopButton = document.getElementById("stop");
 
@@ -233,33 +233,34 @@ function step(timestamp) {
         gameFoods = [{ x: randomNumber, y: randomNumber }];
         renderGamePoints();
         increseFat(gameScore);
-        changeBellyBodyColor();
+        changeBelleyBodyColor();
       }
 
+      // animate the belley
       if (box) {
         box.style.transform = `translate(${countX}px,${countY}px)`;
       }
+
+      // print the title
       if (title) {
         title.innerHTML = `X: ${Math.round(countX)} <br> Y: ${Math.round(
           countY
         )}`;
       }
-      if (score) {
-        score.innerHTML = `${gameScore}`;
+
+      // print the score
+      if (scoreBox) {
+        scoreBox.innerHTML = `${gameScore}`;
       }
+
+      // is the belley crash with wall ? ok end the game 🤕
       if (
         countX > frameLength - (boxSize + gameScore) ||
         countX <= 0 ||
         countY > frameLength - (boxSize + gameScore) ||
         countY <= 0
       ) {
-        done = true;
-        if (title) {
-          title.innerHTML = "GAME IS OVER";
-        }
-        if (box) {
-          box.style.background = `red`;
-        }
+        endTheGame();
       }
     }
   }
@@ -316,9 +317,19 @@ function increseFat(newFoodAmount: number) {
   }
 }
 
-function changeBellyBodyColor() {
+function changeBelleyBodyColor() {
   if (box) {
     const randomNumber = Math.floor(Math.random() * colors.length);
     box.style.background = `rgba(${colors[randomNumber]})`;
+  }
+}
+
+function endTheGame() {
+  done = true;
+  if (title) {
+    title.innerHTML = "GAME IS OVER";
+  }
+  if (box) {
+    box.style.background = `red`;
   }
 }
