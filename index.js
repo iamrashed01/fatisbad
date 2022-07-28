@@ -87,11 +87,9 @@ var colors = [
     "119, 136, 153, 1",
     "119, 136, 153, 1",
     "176, 196, 222, 1",
-    "255, 255, 224, 1",
     "0, 255, 0, 1",
     "50, 205, 50, 1",
     "250, 240, 230, 1",
-    "255, 0, 255, 1",
     "128, 0, 0, 1",
     "102, 205, 170, 1",
     "0, 0, 205, 1",
@@ -159,7 +157,7 @@ var colors = [
 var board = document.getElementById("board");
 var box = document.getElementById("box");
 var title = document.getElementById("title");
-var score = document.getElementById("score");
+var scoreBox = document.getElementById("score");
 var playButton = document.getElementById("play");
 var stopButton = document.getElementById("stop");
 var positionX = 1, positionY = 1, previousTimeStamp = 1;
@@ -222,28 +220,26 @@ function step(timestamp) {
                 gameFoods = [{ x: randomNumber, y: randomNumber }];
                 renderGamePoints();
                 increseFat(gameScore);
-                changeBellyBodyColor();
+                changeBelleyBodyColor();
             }
+            // animate the belley
             if (box) {
                 box.style.transform = "translate(".concat(countX_1, "px,").concat(countY_1, "px)");
             }
+            // print the title
             if (title) {
                 title.innerHTML = "X: ".concat(Math.round(countX_1), " <br> Y: ").concat(Math.round(countY_1));
             }
-            if (score) {
-                score.innerHTML = "".concat(gameScore);
+            // print the score
+            if (scoreBox) {
+                scoreBox.innerHTML = "".concat(gameScore);
             }
+            // is the belley crash with wall ? ok end the game 🤕
             if (countX_1 > frameLength - (boxSize + gameScore) ||
                 countX_1 <= 0 ||
                 countY_1 > frameLength - (boxSize + gameScore) ||
                 countY_1 <= 0) {
-                done = true;
-                if (title) {
-                    title.innerHTML = "GAME IS OVER";
-                }
-                if (box) {
-                    box.style.background = "red";
-                }
+                endTheGame();
             }
         }
     }
@@ -290,9 +286,21 @@ function increseFat(newFoodAmount) {
         box.style.width = "".concat(boxSize + newFoodAmount, "px");
     }
 }
-function changeBellyBodyColor() {
+function changeBelleyBodyColor() {
     if (box) {
         var randomNumber = Math.floor(Math.random() * colors.length);
         box.style.background = "rgba(".concat(colors[randomNumber], ")");
+    }
+}
+function endTheGame() {
+    done = true;
+    if (title) {
+        title.innerHTML = "GAME IS OVER";
+    }
+    if (board) {
+        board.innerHTML = "FAT IS BAD!";
+    }
+    if (box) {
+        box.style.background = "red";
     }
 }

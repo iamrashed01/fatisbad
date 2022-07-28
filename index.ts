@@ -329,6 +329,9 @@ function endTheGame() {
   if (title) {
     title.innerHTML = "GAME IS OVER";
   }
+  if (board) {
+    board.innerHTML = "FAT IS BAD!";
+  }
   if (box) {
     box.style.background = `red`;
   }
