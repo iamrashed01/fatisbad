@@ -117,7 +117,7 @@ function step(timestamp: number) {
       ) {
         renderGameFoods();
         incrementScore();
-        increseFat(gameScore);
+        increseFat(gameScore * 2);
       }
 
       // animate the belley
