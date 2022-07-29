@@ -52,10 +52,21 @@ interface IIsBelleyEat {
 
 export function isBelleyEat({ food, x, y, boxSize }: IIsBelleyEat) {
   return (
-    food.x + boxSize / 2 > Math.round(x) &&
-    food.x - boxSize / 2 < Math.round(x) &&
-    food.y + boxSize / 2 > Math.round(y) &&
-    food.y - boxSize / 2 < Math.round(y)
+    // food.x + boxSize / 2 > Math.round(x) &&
+    // food.x - boxSize / 2 < Math.round(x) &&
+    // food.y + boxSize / 2 > Math.round(y) &&
+    // food.y - boxSize / 2 < Math.round(y)
+
+    (food.x > Math.round(x) &&
+      food.x < Math.round(x) + boxSize &&
+      // y is under wall y to wall y+boxSize dimension
+      food.y > Math.round(y) &&
+      food.y < Math.round(y) + boxSize) || // x is under wall x to wall x+boxSize dimension
+    (food.x + boxSize > Math.round(x) &&
+      food.x + boxSize < Math.round(x) + boxSize &&
+      // y is under wall y to wall y+boxSize dimension
+      food.y + boxSize > Math.round(y) &&
+      food.y + boxSize < Math.round(y) + boxSize)
   );
 }
 

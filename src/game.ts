@@ -18,7 +18,7 @@ let positionX: number = 1,
   previousTimeStamp: number = 1;
 let done: boolean = false;
 let direction: IBelleyMovingDirection = IBelleyMovingDirection.ArrowRight;
-const frameLength: number = 400;
+const frameLength: number = 800;
 let gameDelay: number = 6; // as second
 let isGameOn: boolean = false;
 let gameScore: number = 0;
@@ -118,13 +118,18 @@ function step(timestamp: number) {
 
     if (previousTimeStamp !== timestamp) {
       // Math.min() is used here to make sure the element stops at exactly [frameLength]px
-      const countX = Math.min(0.05 * positionX, frameLength);
-      const countY = Math.min(0.05 * positionY, frameLength);
+      const countX = Math.min(0.1 * positionX, frameLength);
+      const countY = Math.min(0.1 * positionY, frameLength);
 
       // score increase
       if (
         gameFoods.some((el) =>
-          isBelleyEat({ food: el, x: countX, y: countY, boxSize: boxSize })
+          isBelleyEat({
+            food: el,
+            x: countX,
+            y: countY,
+            boxSize: boxSize + gameScore, // boxsixe extended with gamescore -> due to box increases after score increase
+          })
         )
       ) {
         renderGameFoods();
@@ -163,7 +168,7 @@ function step(timestamp: number) {
       isBelleyCrashWithWall({
         belleyPositionX: countX,
         belleyPositionY: countY,
-        boxSize: boxSize,
+        boxSize: boxSize + gameScore,
         customWalls: customWalls,
         endTheGame: endTheGame,
       });
