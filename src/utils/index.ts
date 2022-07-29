@@ -44,18 +44,18 @@ export function isBelleyCrashWithWall({
 }
 
 interface IIsBelleyEat {
-  belley: IFood;
+  food: IFood;
   x: number;
   y: number;
   boxSize: number;
 }
 
-export function isBelleyEat({ belley, x, y, boxSize }: IIsBelleyEat) {
+export function isBelleyEat({ food, x, y, boxSize }: IIsBelleyEat) {
   return (
-    belley.x + boxSize / 2 > Math.round(x) &&
-    belley.x - boxSize / 2 < Math.round(x) &&
-    belley.y + boxSize / 2 > Math.round(y) &&
-    belley.y - boxSize / 2 < Math.round(y)
+    food.x + boxSize / 2 > Math.round(x) &&
+    food.x - boxSize / 2 < Math.round(x) &&
+    food.y + boxSize / 2 > Math.round(y) &&
+    food.y - boxSize / 2 < Math.round(y)
   );
 }
 

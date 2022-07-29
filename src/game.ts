@@ -19,7 +19,7 @@ let positionX: number = 1,
 let done: boolean = false;
 let direction: IBelleyMovingDirection = IBelleyMovingDirection.ArrowRight;
 const frameLength: number = 400;
-let gameDelay: number = 1; // as second
+let gameDelay: number = 6; // as second
 let isGameOn: boolean = false;
 let gameScore: number = 0;
 let boxSize: number = 10;
@@ -72,11 +72,23 @@ function renderGameFoods() {
   // remove all foods first
   removeFoods();
   // generate fresh game foods
-  const arr = generateGameFoods(frameLength);
-  gameFoods = arr;
+  gameFoods = generateGameFoods(frameLength);
+  while (
+    customWalls &&
+    customWalls.length > 0 &&
+    customWalls.some((el) => {
+      return (
+        (el.x < gameFoods[0].x && el.x + el.body > gameFoods[0].x) ||
+        (el.y < gameFoods[0].x && el.y + el.body > gameFoods[0].x)
+      );
+    })
+  ) {
+    console.log("was inside the wall!: regenerating foods");
+    gameFoods = generateGameFoods(frameLength);
+  }
 
   // render new foods
-  arr.forEach((food) => {
+  gameFoods.forEach((food) => {
     const foodEl = document.createElement("div");
     foodEl.classList.add("food");
     foodEl.style.transform = `translate(${food.x}px, ${food.y}px)`;
@@ -112,7 +124,7 @@ function step(timestamp: number) {
       // score increase
       if (
         gameFoods.some((el) =>
-          isBelleyEat({ belley: el, x: countX, y: countY, boxSize: boxSize })
+          isBelleyEat({ food: el, x: countX, y: countY, boxSize: boxSize })
         )
       ) {
         renderGameFoods();
@@ -177,7 +189,7 @@ function endTheGame() {
     title.innerHTML = "GAME IS OVER";
   }
   if (board) {
-    board.innerHTML = "FAT IS BAD!";
+    // board.innerHTML = "FAT IS BAD!";
   }
   if (box) {
     box.style.background = `red`;
@@ -223,19 +235,21 @@ function gameInit(
   titleEl: HTMLDivElement,
   scoreBoxEl: HTMLDivElement
 ) {
+  // reassign html element
   board = boardEl;
   box = boxEl;
   title = titleEl;
   scoreBox = scoreBoxEl;
 
+  // initialize game assets
+  setGenerateRandomWall();
+  renderWall();
+  renderGameFoods();
+
   interval = setInterval(() => {
     // show game starting countdown before game start
     showGameDelay();
     // start the main game
-    renderGameFoods();
-    // render the wall into game board
-    setGenerateRandomWall();
-    renderWall();
     startTheGame();
   }, 1000);
 }
