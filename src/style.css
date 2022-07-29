@@ -22,8 +22,8 @@
 }
 
 #board {
-  width: 800px;
-  height: 800px;
+  width: 600px;
+  height: 600px;
   background: #f9f9f9;
   border-radius: 5px;
   position: relative;

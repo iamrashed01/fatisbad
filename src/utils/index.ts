@@ -24,22 +24,23 @@ export function isBelleyCrashWithWall({
   boxSize,
   endTheGame,
 }: IIsBelleyCrashWithWall) {
-  if (customWalls.length > 0) {
-    if (
-      // x is under wall x to wall x+body dimension
-      (belleyPositionX > customWalls[0].x &&
-        belleyPositionX < customWalls[0].x + customWalls[0].body &&
-        // y is under wall y to wall y+body dimension
-        belleyPositionY > customWalls[0].y &&
-        belleyPositionY < customWalls[0].y + customWalls[0].body) || // x is under wall x to wall x+body dimension
-      (belleyPositionX + boxSize > customWalls[0].x &&
-        belleyPositionX + boxSize < customWalls[0].x + customWalls[0].body &&
-        // y is under wall y to wall y+body dimension
-        belleyPositionY + boxSize > customWalls[0].y &&
-        belleyPositionY + boxSize < customWalls[0].y + customWalls[0].body)
-    ) {
-      endTheGame();
-    }
+  if (
+    // x is under wall x to wall x+body dimension
+    customWalls.some(
+      (el) =>
+        (belleyPositionX > el.x &&
+          belleyPositionX < el.x + el.body &&
+          // y is under wall y to wall y+body dimension
+          belleyPositionY > el.y &&
+          belleyPositionY < el.y + el.body) || // x is under wall x to wall x+body dimension
+        (belleyPositionX + boxSize > el.x &&
+          belleyPositionX + boxSize < el.x + el.body &&
+          // y is under wall y to wall y+body dimension
+          belleyPositionY + boxSize > el.y &&
+          belleyPositionY + boxSize < el.y + el.body)
+    )
+  ) {
+    endTheGame();
   }
 }
 
@@ -51,22 +52,10 @@ interface IIsBelleyEat {
 }
 
 export function isBelleyEat({ food, x, y, boxSize }: IIsBelleyEat) {
+  // logic is Math.abs(actual - comparison) <= 10
   return (
-    // food.x + boxSize / 2 > Math.round(x) &&
-    // food.x - boxSize / 2 < Math.round(x) &&
-    // food.y + boxSize / 2 > Math.round(y) &&
-    // food.y - boxSize / 2 < Math.round(y)
-
-    (food.x > Math.round(x) &&
-      food.x < Math.round(x) + boxSize &&
-      // y is under wall y to wall y+boxSize dimension
-      food.y > Math.round(y) &&
-      food.y < Math.round(y) + boxSize) || // x is under wall x to wall x+boxSize dimension
-    (food.x + boxSize > Math.round(x) &&
-      food.x + boxSize < Math.round(x) + boxSize &&
-      // y is under wall y to wall y+boxSize dimension
-      food.y + boxSize > Math.round(y) &&
-      food.y + boxSize < Math.round(y) + boxSize)
+    Math.abs(food.x + 5 - (x + boxSize / 2)) <= 5 + boxSize / 2 &&
+    Math.abs(food.y + 5 - (y + boxSize / 2)) <= 5 + boxSize / 2
   );
 }
 
