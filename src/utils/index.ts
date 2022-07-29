@@ -15,33 +15,27 @@ interface IIsBelleyCrashWithWall {
   belleyPositionY: number;
   customWalls: IWall[];
   boxSize: number;
-  endTheGame: Function;
 }
 export function isBelleyCrashWithWall({
   belleyPositionX,
   belleyPositionY,
   customWalls,
   boxSize,
-  endTheGame,
 }: IIsBelleyCrashWithWall) {
-  if (
-    // x is under wall x to wall x+body dimension
-    customWalls.some(
-      (el) =>
-        (belleyPositionX > el.x &&
-          belleyPositionX < el.x + el.body &&
-          // y is under wall y to wall y+body dimension
-          belleyPositionY > el.y &&
-          belleyPositionY < el.y + el.body) || // x is under wall x to wall x+body dimension
-        (belleyPositionX + boxSize > el.x &&
-          belleyPositionX + boxSize < el.x + el.body &&
-          // y is under wall y to wall y+body dimension
-          belleyPositionY + boxSize > el.y &&
-          belleyPositionY + boxSize < el.y + el.body)
-    )
-  ) {
-    endTheGame();
-  }
+  // x is under wall x to wall x+body dimension
+  return customWalls.some(
+    (el) =>
+      (belleyPositionX > el.x &&
+        belleyPositionX < el.x + el.body &&
+        // y is under wall y to wall y+body dimension
+        belleyPositionY > el.y &&
+        belleyPositionY < el.y + el.body) || // x is under wall x to wall x+body dimension
+      (belleyPositionX + boxSize > el.x &&
+        belleyPositionX + boxSize < el.x + el.body &&
+        // y is under wall y to wall y+body dimension
+        belleyPositionY + boxSize > el.y &&
+        belleyPositionY + boxSize < el.y + el.body)
+  );
 }
 
 interface IIsBelleyEat {

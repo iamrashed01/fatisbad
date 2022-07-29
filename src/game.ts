@@ -165,13 +165,16 @@ function step(timestamp: number) {
       }
 
       // is the belley crash with inner wall ? ok end the game 🤕
-      isBelleyCrashWithWall({
-        belleyPositionX: countX,
-        belleyPositionY: countY,
-        boxSize: boxSize + gameScore,
-        customWalls: customWalls,
-        endTheGame: endTheGame,
-      });
+      if (
+        isBelleyCrashWithWall({
+          belleyPositionX: countX,
+          belleyPositionY: countY,
+          boxSize: boxSize + gameScore,
+          customWalls: customWalls,
+        })
+      ) {
+        endTheGame();
+      }
     }
   }
 
