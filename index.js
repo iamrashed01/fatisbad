@@ -1,158 +1,158 @@
-var Direction;
-(function (Direction) {
-    Direction["ArrowLeft"] = "ArrowLeft";
-    Direction["ArrowUp"] = "ArrowUp";
-    Direction["ArrowRight"] = "ArrowRight";
-    Direction["ArrowDown"] = "ArrowDown";
-})(Direction || (Direction = {}));
+var IBelleyMovingDirection;
+(function (IBelleyMovingDirection) {
+    IBelleyMovingDirection["ArrowLeft"] = "ArrowLeft";
+    IBelleyMovingDirection["ArrowUp"] = "ArrowUp";
+    IBelleyMovingDirection["ArrowRight"] = "ArrowRight";
+    IBelleyMovingDirection["ArrowDown"] = "ArrowDown";
+})(IBelleyMovingDirection || (IBelleyMovingDirection = {}));
 var colors = [
-    "240, 248, 255, 1",
-    "250, 235, 215, 1",
-    "0, 255, 255, 1",
-    "127, 255, 212, 1",
-    "240, 255, 255, 1",
-    "245, 245, 220, 1",
-    "255, 228, 196, 1",
-    "0, 0, 0, 1",
-    "255, 235, 205, 1",
-    "0, 0, 255, 1",
-    "138, 43, 226, 1",
-    "165, 42, 42, 1",
-    "222, 184, 135, 1",
-    "95, 158, 160, 1",
-    "127, 255, 0, 1",
-    "210, 105, 30, 1",
-    "255, 127, 80, 1",
-    "100, 149, 237, 1",
-    "255, 248, 220, 1",
-    "220, 20, 60, 1",
-    "0, 255, 255, 1",
-    "0, 0, 139, 1",
-    "0, 139, 139, 1",
-    "184, 134, 11, 1",
-    "169, 169, 169, 1",
-    "0, 100, 0, 1",
-    "169, 169, 169, 1",
-    "189, 183, 107, 1",
-    "139, 0, 139, 1",
-    "85, 107, 47, 1",
-    "255, 140, 0, 1",
-    "153, 50, 204, 1",
-    "139, 0, 0, 1",
-    "233, 150, 122, 1",
-    "143, 188, 143, 1",
-    "72, 61, 139, 1",
-    "47, 79, 79, 1",
-    "47, 79, 79, 1",
-    "0, 206, 209, 1",
-    "148, 0, 211, 1",
-    "255, 20, 147, 1",
-    "0, 191, 255, 1",
-    "105, 105, 105, 1",
-    "105, 105, 105, 1",
-    "30, 144, 255, 1",
-    "178, 34, 34, 1",
-    "255, 250, 240, 1",
-    "34, 139, 34, 1",
-    "255, 0, 255, 1",
-    "220, 220, 220, 1",
-    "248, 248, 255, 1",
-    "255, 215, 0, 1",
-    "218, 165, 32, 1",
-    "128, 128, 128, 1",
-    "0, 128, 0, 1",
-    "173, 255, 47, 1",
-    "128, 128, 128, 1",
-    "240, 255, 240, 1",
-    "255, 105, 180, 1",
-    "205, 92, 92, 1",
-    "75, 0, 130, 1",
-    "255, 255, 240, 1",
-    "240, 230, 140, 1",
-    "230, 230, 250, 1",
-    "255, 240, 245, 1",
-    "124, 252, 0, 1",
-    "255, 250, 205, 1",
-    "173, 216, 230, 1",
-    "240, 128, 128, 1",
-    "224, 255, 255, 1",
-    "250, 250, 210, 1",
-    "211, 211, 211, 1",
-    "144, 238, 144, 1",
-    "211, 211, 211, 1",
-    "255, 182, 193, 1",
-    "255, 160, 122, 1",
-    "32, 178, 170, 1",
-    "135, 206, 250, 1",
-    "119, 136, 153, 1",
-    "119, 136, 153, 1",
-    "176, 196, 222, 1",
-    "0, 255, 0, 1",
-    "50, 205, 50, 1",
-    "250, 240, 230, 1",
-    "128, 0, 0, 1",
-    "102, 205, 170, 1",
-    "0, 0, 205, 1",
-    "186, 85, 211, 1",
-    "147, 112, 219, 1",
-    "60, 179, 113, 1",
-    "123, 104, 238, 1",
-    "0, 250, 154, 1",
-    "72, 209, 204, 1",
-    "199, 21, 133, 1",
-    "25, 25, 112, 1",
-    "245, 255, 250, 1",
-    "255, 228, 225, 1",
-    "255, 228, 181, 1",
-    "255, 222, 173, 1",
-    "0, 0, 128, 1",
-    "253, 245, 230, 1",
-    "128, 128, 0, 1",
-    "107, 142, 35, 1",
-    "255, 165, 0, 1",
-    "255, 69, 0, 1",
-    "218, 112, 214, 1",
-    "238, 232, 170, 1",
-    "152, 251, 152, 1",
-    "175, 238, 238, 1",
-    "219, 112, 147, 1",
-    "255, 239, 213, 1",
-    "255, 218, 185, 1",
-    "205, 133, 63, 1",
-    "255, 192, 203, 1",
-    "221, 160, 221, 1",
-    "176, 224, 230, 1",
-    "128, 0, 128, 1",
-    "255, 0, 0, 1",
-    "188, 143, 143, 1",
-    "65, 105, 225, 1",
-    "139, 69, 19, 1",
-    "250, 128, 114, 1",
-    "244, 164, 96, 1",
-    "46, 139, 87, 1",
-    "255, 245, 238, 1",
-    "160, 82, 45, 1",
-    "192, 192, 192, 1",
-    "135, 206, 235, 1",
-    "106, 90, 205, 1",
-    "112, 128, 144, 1",
-    "112, 128, 144, 1",
-    "255, 250, 250, 1",
-    "0, 255, 127, 1",
-    "70, 130, 180, 1",
-    "210, 180, 140, 1",
-    "0, 128, 128, 1",
-    "216, 191, 216, 1",
-    "255, 99, 71, 1",
-    "0, 0, 0, 0",
-    "64, 224, 208, 1",
-    "238, 130, 238, 1",
-    "245, 222, 179, 1",
-    "255, 255, 255, 1",
-    "245, 245, 245, 1",
-    "255, 255, 0, 1",
-    "154, 205, 50, 1",
-    "102, 51, 153, 1",
+    "rgba(240, 248, 255, 1)",
+    "rgba(250, 235, 215, 1)",
+    "rgba(0, 255, 255, 1)",
+    "rgba(127, 255, 212, 1)",
+    "rgba(240, 255, 255, 1)",
+    "rgba(245, 245, 220, 1)",
+    "rgba(255, 228, 196, 1)",
+    "rgba(0, 0, 0, 1)",
+    "rgba(255, 235, 205, 1)",
+    "rgba(0, 0, 255, 1)",
+    "rgba(138, 43, 226, 1)",
+    "rgba(165, 42, 42, 1)",
+    "rgba(222, 184, 135, 1)",
+    "rgba(95, 158, 160, 1)",
+    "rgba(127, 255, 0, 1)",
+    "rgba(210, 105, 30, 1)",
+    "rgba(255, 127, 80, 1)",
+    "rgba(100, 149, 237, 1)",
+    "rgba(255, 248, 220, 1)",
+    "rgba(220, 20, 60, 1)",
+    "rgba(0, 255, 255, 1)",
+    "rgba(0, 0, 139, 1)",
+    "rgba(0, 139, 139, 1)",
+    "rgba(184, 134, 11, 1)",
+    "rgba(169, 169, 169, 1)",
+    "rgba(0, 100, 0, 1)",
+    "rgba(169, 169, 169, 1)",
+    "rgba(189, 183, 107, 1)",
+    "rgba(139, 0, 139, 1)",
+    "rgba(85, 107, 47, 1)",
+    "rgba(255, 140, 0, 1)",
+    "rgba(153, 50, 204, 1)",
+    "rgba(139, 0, 0, 1)",
+    "rgba(233, 150, 122, 1)",
+    "rgba(143, 188, 143, 1)",
+    "rgba(72, 61, 139, 1)",
+    "rgba(47, 79, 79, 1)",
+    "rgba(47, 79, 79, 1)",
+    "rgba(0, 206, 209, 1)",
+    "rgba(148, 0, 211, 1)",
+    "rgba(255, 20, 147, 1)",
+    "rgba(0, 191, 255, 1)",
+    "rgba(105, 105, 105, 1)",
+    "rgba(105, 105, 105, 1)",
+    "rgba(30, 144, 255, 1)",
+    "rgba(178, 34, 34, 1)",
+    "rgba(255, 250, 240, 1)",
+    "rgba(34, 139, 34, 1)",
+    "rgba(255, 0, 255, 1)",
+    "rgba(220, 220, 220, 1)",
+    "rgba(248, 248, 255, 1)",
+    "rgba(255, 215, 0, 1)",
+    "rgba(218, 165, 32, 1)",
+    "rgba(128, 128, 128, 1)",
+    "rgba(0, 128, 0, 1)",
+    "rgba(173, 255, 47, 1)",
+    "rgba(128, 128, 128, 1)",
+    "rgba(240, 255, 240, 1)",
+    "rgba(255, 105, 180, 1)",
+    "rgba(205, 92, 92, 1)",
+    "rgba(75, 0, 130, 1)",
+    "rgba(255, 255, 240, 1)",
+    "rgba(240, 230, 140, 1)",
+    "rgba(230, 230, 250, 1)",
+    "rgba(255, 240, 245, 1)",
+    "rgba(124, 252, 0, 1)",
+    "rgba(255, 250, 205, 1)",
+    "rgba(173, 216, 230, 1)",
+    "rgba(240, 128, 128, 1)",
+    "rgba(224, 255, 255, 1)",
+    "rgba(250, 250, 210, 1)",
+    "rgba(211, 211, 211, 1)",
+    "rgba(144, 238, 144, 1)",
+    "rgba(211, 211, 211, 1)",
+    "rgba(255, 182, 193, 1)",
+    "rgba(255, 160, 122, 1)",
+    "rgba(32, 178, 170, 1)",
+    "rgba(135, 206, 250, 1)",
+    "rgba(119, 136, 153, 1)",
+    "rgba(119, 136, 153, 1)",
+    "rgba(176, 196, 222, 1)",
+    "rgba(0, 255, 0, 1)",
+    "rgba(50, 205, 50, 1)",
+    "rgba(250, 240, 230, 1)",
+    "rgba(128, 0, 0, 1)",
+    "rgba(102, 205, 170, 1)",
+    "rgba(0, 0, 205, 1)",
+    "rgba(186, 85, 211, 1)",
+    "rgba(147, 112, 219, 1)",
+    "rgba(60, 179, 113, 1)",
+    "rgba(123, 104, 238, 1)",
+    "rgba(0, 250, 154, 1)",
+    "rgba(72, 209, 204, 1)",
+    "rgba(199, 21, 133, 1)",
+    "rgba(25, 25, 112, 1)",
+    "rgba(245, 255, 250, 1)",
+    "rgba(255, 228, 225, 1)",
+    "rgba(255, 228, 181, 1)",
+    "rgba(255, 222, 173, 1)",
+    "rgba(0, 0, 128, 1)",
+    "rgba(253, 245, 230, 1)",
+    "rgba(128, 128, 0, 1)",
+    "rgba(107, 142, 35, 1)",
+    "rgba(255, 165, 0, 1)",
+    "rgba(255, 69, 0, 1)",
+    "rgba(218, 112, 214, 1)",
+    "rgba(238, 232, 170, 1)",
+    "rgba(152, 251, 152, 1)",
+    "rgba(175, 238, 238, 1)",
+    "rgba(219, 112, 147, 1)",
+    "rgba(255, 239, 213, 1)",
+    "rgba(255, 218, 185, 1)",
+    "rgba(205, 133, 63, 1)",
+    "rgba(255, 192, 203, 1)",
+    "rgba(221, 160, 221, 1)",
+    "rgba(176, 224, 230, 1)",
+    "rgba(128, 0, 128, 1)",
+    "rgba(255, 0, 0, 1)",
+    "rgba(188, 143, 143, 1)",
+    "rgba(65, 105, 225, 1)",
+    "rgba(139, 69, 19, 1)",
+    "rgba(250, 128, 114, 1)",
+    "rgba(244, 164, 96, 1)",
+    "rgba(46, 139, 87, 1)",
+    "rgba(255, 245, 238, 1)",
+    "rgba(160, 82, 45, 1)",
+    "rgba(192, 192, 192, 1)",
+    "rgba(135, 206, 235, 1)",
+    "rgba(106, 90, 205, 1)",
+    "rgba(112, 128, 144, 1)",
+    "rgba(112, 128, 144, 1)",
+    "rgba(255, 250, 250, 1)",
+    "rgba(0, 255, 127, 1)",
+    "rgba(70, 130, 180, 1)",
+    "rgba(210, 180, 140, 1)",
+    "rgba(0, 128, 128, 1)",
+    "rgba(216, 191, 216, 1)",
+    "rgba(255, 99, 71, 1)",
+    "rgba(0, 0, 0, 0)",
+    "rgba(64, 224, 208, 1)",
+    "rgba(238, 130, 238, 1)",
+    "rgba(245, 222, 179, 1)",
+    "rgba(255, 255, 255, 1)",
+    "rgba(245, 245, 245, 1)",
+    "rgba(255, 255, 0, 1)",
+    "rgba(154, 205, 50, 1)",
+    "rgba(102, 51, 153, 1)",
 ];
 var board = document.getElementById("board");
 var box = document.getElementById("box");
@@ -162,18 +162,17 @@ var playButton = document.getElementById("play");
 var stopButton = document.getElementById("stop");
 var positionX = 1, positionY = 1, previousTimeStamp = 1;
 var done = false;
-var direction = Direction.ArrowRight;
+var direction = IBelleyMovingDirection.ArrowRight;
 var frameLength = 400;
 var gameDelay = 1; // as second
 var isGameOn = false;
 var gameScore = 0;
 var boxSize = 10;
-// points
-var gameFoods = [{ x: 10, y: 15 }];
-var customWalls = [{ x: 10, y: 15, body: 70, wallColor: "red" }];
+var gameFoods = [];
+var customWalls = [];
 // game controls
 window.addEventListener("keydown", function (e) {
-    if (Object.values(Direction).includes(e.key)) {
+    if (Object.values(IBelleyMovingDirection).includes(e.key)) {
         direction = e.key;
     }
 });
@@ -185,27 +184,46 @@ function renderWall() {
         wallEl.style.width = "".concat(wall.body, "px");
         wallEl.style.height = "".concat(wall.body, "px");
         wallEl.style.background = "".concat(wall.wallColor);
+        wallEl.style.borderRadius = "".concat(wall.body, "px");
         board === null || board === void 0 ? void 0 : board.appendChild(wallEl);
     });
 }
-function renderGamePoints(arr) {
-    if (arr === void 0) { arr = gameFoods; }
+function setGenerateRandomWall() {
+    var randomLoopsCount = getRandomArbitrary(1, 5);
+    for (var i = 0; i <= randomLoopsCount; i++) {
+        var randomWallPositionNumber = getRandomArbitrary(0, frameLength - 50);
+        var randomWallSize = getRandomArbitrary(30, Math.max(frameLength / (randomLoopsCount * 2) - 20, 30));
+        customWalls.push({
+            x: randomWallPositionNumber,
+            y: randomWallPositionNumber,
+            body: randomWallSize,
+            wallColor: getRandomRgbaColor()
+        });
+    }
+}
+function renderGameFoods() {
     // remove all foods first
     removeFoods();
-    // set new game points
-    gameScore += 1;
-    var randomNumber = Math.floor(Math.random() * frameLength - 20);
-    gameFoods = [{ x: randomNumber, y: randomNumber }];
+    // generate fresh game foods
+    var arr = generateGameFoods();
+    console.log(gameFoods, "game foods");
     // render new foods
-    arr.forEach(function (point) {
+    arr.forEach(function (food) {
         var foodEl = document.createElement("div");
-        foodEl.classList.add("point");
-        foodEl.style.transform = "translate(".concat(point.x, "px, ").concat(point.y, "px)");
+        foodEl.classList.add("food");
+        foodEl.style.transform = "translate(".concat(food.x, "px, ").concat(food.y, "px)");
         board === null || board === void 0 ? void 0 : board.appendChild(foodEl);
     });
 }
+function generateGameFoods() {
+    var randomNumber = getRandomArbitrary(1, frameLength - 20);
+    return (gameFoods = [{ x: randomNumber, y: randomNumber }]);
+}
+function incrementScore() {
+    gameScore += 1;
+}
 function removeFoods() {
-    var boxes = document.querySelectorAll(".point");
+    var boxes = document.querySelectorAll(".food");
     boxes.forEach(function (box) {
         box.remove();
     });
@@ -213,16 +231,16 @@ function removeFoods() {
 // main frame to count and continue game
 function step(timestamp) {
     if (isGameOn) {
-        if (direction === Direction.ArrowRight) {
+        if (direction === IBelleyMovingDirection.ArrowRight) {
             positionX += timestamp - previousTimeStamp;
         }
-        else if (direction === Direction.ArrowLeft) {
+        else if (direction === IBelleyMovingDirection.ArrowLeft) {
             positionX -= timestamp - previousTimeStamp;
         }
-        if (direction === Direction.ArrowDown) {
+        if (direction === IBelleyMovingDirection.ArrowDown) {
             positionY += timestamp - previousTimeStamp;
         }
-        else if (direction === Direction.ArrowUp) {
+        else if (direction === IBelleyMovingDirection.ArrowUp) {
             positionY -= timestamp - previousTimeStamp;
         }
         if (previousTimeStamp !== timestamp) {
@@ -231,7 +249,8 @@ function step(timestamp) {
             var countY_1 = Math.min(0.05 * positionY, frameLength);
             // score increase
             if (gameFoods.some(function (el) { return isBelleyEat(el, countX_1, countY_1); })) {
-                renderGamePoints();
+                renderGameFoods();
+                incrementScore();
                 increseFat(gameScore);
                 changeBelleyBodyColor();
             }
@@ -254,14 +273,9 @@ function step(timestamp) {
                 countY_1 <= 0) {
                 endTheGame();
             }
+            // TODO: working on inner wall
             // is the belley crash with inner wall ? ok end the game 🤕
-            if (countX_1 > customWalls[0].x + customWalls[0].body ||
-                // countX <= customWalls[0].x ||
-                countY_1 > customWalls[0].y + customWalls[0].body
-            // countY <= customWalls[0].y
-            ) {
-                endTheGame();
-            }
+            isBelleyCrashWithWall(countX_1, countY_1);
         }
     }
     if (!done) {
@@ -269,33 +283,24 @@ function step(timestamp) {
         window.requestAnimationFrame(step);
     }
 }
-function showGameDelay() {
-    if (gameDelay > 0) {
-        gameDelay -= 1;
-        if (title) {
-            title.innerHTML = "".concat(gameDelay);
+function isBelleyCrashWithWall(belleyPositionX, belleyPositionY) {
+    if (customWalls.length > 0) {
+        if (
+        // x is under wall x to wall x+body dimension
+        (belleyPositionX > customWalls[0].x &&
+            belleyPositionX < customWalls[0].x + customWalls[0].body &&
+            // y is under wall y to wall y+body dimension
+            belleyPositionY > customWalls[0].y &&
+            belleyPositionY < customWalls[0].y + customWalls[0].body) || // x is under wall x to wall x+body dimension
+            (belleyPositionX + boxSize > customWalls[0].x &&
+                belleyPositionX + boxSize < customWalls[0].x + customWalls[0].body &&
+                // y is under wall y to wall y+body dimension
+                belleyPositionY + boxSize > customWalls[0].y &&
+                belleyPositionY + boxSize < customWalls[0].y + customWalls[0].body)) {
+            endTheGame();
         }
     }
 }
-function startTheGame() {
-    if (gameDelay === 0) {
-        // clear the countdown interval
-        clearInterval(interval);
-        // start the main GAME
-        isGameOn = true;
-    }
-}
-var interval = setInterval(function () {
-    // show game starting countdown before game start
-    showGameDelay();
-    // start the main game
-    renderGamePoints();
-    // render the wall into game board
-    renderWall();
-    startTheGame();
-}, 1000);
-// game initialized
-window.requestAnimationFrame(step);
 function isBelleyEat(belley, x, y) {
     return (belley.x + boxSize / 2 > Math.round(x) &&
         belley.x - boxSize / 2 < Math.round(x) &&
@@ -303,16 +308,18 @@ function isBelleyEat(belley, x, y) {
         belley.y - boxSize / 2 < Math.round(y));
 }
 function increseFat(newFoodAmount) {
-    console.log(boxSize + newFoodAmount, "boxSize");
     if (box) {
         box.style.height = "".concat(boxSize + newFoodAmount, "px");
         box.style.width = "".concat(boxSize + newFoodAmount, "px");
     }
 }
+function getRandomRgbaColor() {
+    var randomNumber = getRandomArbitrary(0, colors.length);
+    return colors[randomNumber];
+}
 function changeBelleyBodyColor() {
     if (box) {
-        var randomNumber = Math.floor(Math.random() * colors.length);
-        box.style.background = "rgba(".concat(colors[randomNumber], ")");
+        box.style.background = "".concat(getRandomRgbaColor());
     }
 }
 function endTheGame() {
@@ -321,7 +328,8 @@ function endTheGame() {
         title.innerHTML = "GAME IS OVER";
     }
     if (board) {
-        board.innerHTML = "FAT IS BAD!";
+        // TODO: will be enable after test, btw canshould be enable anytime
+        // board.innerHTML = "FAT IS BAD!";
     }
     if (box) {
         box.style.background = "red";
@@ -336,3 +344,34 @@ function setHighestScore() {
         return (scoreBox.innerHTML = "Highest Score: ".concat(maxScore));
     }
 }
+function showGameDelay() {
+    if (gameDelay > 0) {
+        gameDelay -= 1;
+        if (title) {
+            title.innerHTML = "".concat(gameDelay);
+        }
+    }
+}
+function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+function startTheGame() {
+    if (gameDelay === 0) {
+        // clear the countdown interval
+        clearInterval(interval);
+        // start the main GAME
+        isGameOn = true;
+    }
+}
+var interval = setInterval(function () {
+    // show game starting countdown before game start
+    showGameDelay();
+    // start the main game
+    renderGameFoods();
+    // render the wall into game board
+    setGenerateRandomWall();
+    renderWall();
+    startTheGame();
+}, 1000);
+// game initialized
+window.requestAnimationFrame(step);
