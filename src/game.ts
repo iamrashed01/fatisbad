@@ -1,5 +1,10 @@
 import { IBelleyMovingDirection, IFood, IWall } from "./interfaces";
-import { colors } from "./utils/colors";
+import {
+  getRandomArbitrary,
+  getRandomRgbaColor,
+  isBelleyCrashWithWall,
+  isBelleyEat,
+} from "./utils";
 
 let board: HTMLDivElement | null = null;
 let box: HTMLDivElement | null = null;
@@ -39,7 +44,7 @@ function renderWall() {
     wallEl.style.transform = `translate(${wall.x}px, ${wall.y}px)`;
     wallEl.style.width = `${wall.body}px`;
     wallEl.style.height = `${wall.body}px`;
-    wallEl.style.background = `${wall.wallColor}`;
+    wallEl.style.background = `red`;
     board?.appendChild(wallEl);
   });
 }
@@ -114,7 +119,11 @@ function step(timestamp: number) {
       const countY = Math.min(0.05 * positionY, frameLength);
 
       // score increase
-      if (gameFoods.some((el) => isBelleyEat(el, countX, countY))) {
+      if (
+        gameFoods.some((el) =>
+          isBelleyEat({ belley: el, x: countX, y: countY, boxSize: boxSize })
+        )
+      ) {
         renderGameFoods();
         incrementScore();
         increseFat(gameScore);
@@ -148,7 +157,13 @@ function step(timestamp: number) {
       }
 
       // is the belley crash with inner wall ? ok end the game 🤕
-      isBelleyCrashWithWall(countX, countY);
+      isBelleyCrashWithWall({
+        belleyPositionX: countX,
+        belleyPositionY: countY,
+        boxSize: boxSize,
+        customWalls: customWalls,
+        endTheGame: endTheGame,
+      });
     }
   }
 
@@ -158,48 +173,11 @@ function step(timestamp: number) {
   }
 }
 
-function isBelleyCrashWithWall(
-  belleyPositionX: number,
-  belleyPositionY: number
-) {
-  if (customWalls.length > 0) {
-    if (
-      // x is under wall x to wall x+body dimension
-      (belleyPositionX > customWalls[0].x &&
-        belleyPositionX < customWalls[0].x + customWalls[0].body &&
-        // y is under wall y to wall y+body dimension
-        belleyPositionY > customWalls[0].y &&
-        belleyPositionY < customWalls[0].y + customWalls[0].body) || // x is under wall x to wall x+body dimension
-      (belleyPositionX + boxSize > customWalls[0].x &&
-        belleyPositionX + boxSize < customWalls[0].x + customWalls[0].body &&
-        // y is under wall y to wall y+body dimension
-        belleyPositionY + boxSize > customWalls[0].y &&
-        belleyPositionY + boxSize < customWalls[0].y + customWalls[0].body)
-    ) {
-      endTheGame();
-    }
-  }
-}
-
-function isBelleyEat(belley: IFood, x: number, y: number) {
-  return (
-    belley.x + boxSize / 2 > Math.round(x) &&
-    belley.x - boxSize / 2 < Math.round(x) &&
-    belley.y + boxSize / 2 > Math.round(y) &&
-    belley.y - boxSize / 2 < Math.round(y)
-  );
-}
-
 function increseFat(newFoodAmount: number) {
   if (box) {
     box.style.height = `${boxSize + newFoodAmount}px`;
     box.style.width = `${boxSize + newFoodAmount}px`;
   }
-}
-
-function getRandomRgbaColor() {
-  const randomNumber = getRandomArbitrary(0, colors.length);
-  return colors[randomNumber];
 }
 
 function endTheGame() {
@@ -236,10 +214,6 @@ function showGameDelay() {
       title.innerHTML = `${gameDelay}`;
     }
   }
-}
-
-function getRandomArbitrary(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min) + min);
 }
 
 let interval: any = null;
