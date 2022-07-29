@@ -154,12 +154,10 @@ const colors = [
   "rgba(102, 51, 153, 1)",
 ];
 
-const board = document.getElementById("board");
-const box = document.getElementById("box");
-const title = document.getElementById("title");
-const scoreBox = document.getElementById("score");
-const playButton = document.getElementById("play");
-const stopButton = document.getElementById("stop");
+let board: HTMLDivElement | null = null;
+let box: HTMLDivElement | null = null;
+let title: HTMLDivElement | null = null;
+let scoreBox: HTMLDivElement | null = null;
 
 let positionX: number = 1,
   positionY: number = 1,
@@ -313,7 +311,6 @@ function step(timestamp: number) {
         endTheGame();
       }
 
-      // TODO: working on inner wall
       // is the belley crash with inner wall ? ok end the game 🤕
       isBelleyCrashWithWall(countX, countY);
     }
@@ -399,6 +396,7 @@ function setHighestScore() {
   if (scoreBox) {
     return (scoreBox.innerHTML = `Highest Score: ${maxScore}`);
   }
+  return "";
 }
 
 function showGameDelay() {
@@ -414,8 +412,9 @@ function getRandomArbitrary(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+let interval: any = null;
 function startTheGame() {
-  if (gameDelay === 0) {
+  if (gameDelay === 0 && interval) {
     // clear the countdown interval
     clearInterval(interval);
     // start the main GAME
@@ -423,16 +422,30 @@ function startTheGame() {
   }
 }
 
-const interval = setInterval(() => {
-  // show game starting countdown before game start
-  showGameDelay();
-  // start the main game
-  renderGameFoods();
-  // render the wall into game board
-  setGenerateRandomWall();
-  renderWall();
-  startTheGame();
-}, 1000);
+function gameInit(
+  boardEl: HTMLDivElement,
+  boxEl: HTMLDivElement,
+  titleEl: HTMLDivElement,
+  scoreBoxEl: HTMLDivElement
+) {
+  board = boardEl;
+  box = boxEl;
+  title = titleEl;
+  scoreBox = scoreBoxEl;
+
+  interval = setInterval(() => {
+    // show game starting countdown before game start
+    showGameDelay();
+    // start the main game
+    renderGameFoods();
+    // render the wall into game board
+    setGenerateRandomWall();
+    renderWall();
+    startTheGame();
+  }, 1000);
+}
 
 // game initialized
 window.requestAnimationFrame(step);
+
+export default gameInit;
