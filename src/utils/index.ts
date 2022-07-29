@@ -58,3 +58,15 @@ export function isBelleyEat({ belley, x, y, boxSize }: IIsBelleyEat) {
     belley.y - boxSize / 2 < Math.round(y)
   );
 }
+
+export function removeFoods() {
+  const boxes = document.querySelectorAll(".food");
+  boxes.forEach((box) => {
+    box.remove();
+  });
+}
+
+export function generateGameFoods(frameLength: number) {
+  const randomNumber = getRandomArbitrary(1, frameLength - 20);
+  return [{ x: randomNumber, y: randomNumber }];
+}

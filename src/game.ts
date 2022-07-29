@@ -1,9 +1,11 @@
 import { IBelleyMovingDirection, IFood, IWall } from "./interfaces";
 import {
+  generateGameFoods,
   getRandomArbitrary,
   getRandomRgbaColor,
   isBelleyCrashWithWall,
   isBelleyEat,
+  removeFoods,
 } from "./utils";
 
 let board: HTMLDivElement | null = null;
@@ -70,7 +72,8 @@ function renderGameFoods() {
   // remove all foods first
   removeFoods();
   // generate fresh game foods
-  const arr = generateGameFoods();
+  const arr = generateGameFoods(frameLength);
+  gameFoods = arr;
 
   // render new foods
   arr.forEach((food) => {
@@ -82,20 +85,8 @@ function renderGameFoods() {
   });
 }
 
-function generateGameFoods() {
-  const randomNumber = getRandomArbitrary(1, frameLength - 20);
-  return (gameFoods = [{ x: randomNumber, y: randomNumber }]);
-}
-
 function incrementScore() {
   gameScore += 1;
-}
-
-function removeFoods() {
-  const boxes = document.querySelectorAll(".food");
-  boxes.forEach((box) => {
-    box.remove();
-  });
 }
 
 // main frame to count and continue game
