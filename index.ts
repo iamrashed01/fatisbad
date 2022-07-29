@@ -259,7 +259,7 @@ function removeFoods() {
 }
 
 // main frame to count and continue game
-function step(timestamp) {
+function step(timestamp: number) {
   if (isGameOn) {
     if (direction === IBelleyMovingDirection.ArrowRight) {
       positionX += timestamp - previousTimeStamp;
@@ -381,8 +381,7 @@ function endTheGame() {
     title.innerHTML = "GAME IS OVER";
   }
   if (board) {
-    // TODO: will be enable after test, btw canshould be enable anytime
-    // board.innerHTML = "FAT IS BAD!";
+    board.innerHTML = "FAT IS BAD!";
   }
   if (box) {
     box.style.background = `red`;

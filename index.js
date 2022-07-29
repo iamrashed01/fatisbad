@@ -189,7 +189,7 @@ function renderWall() {
     });
 }
 function setGenerateRandomWall() {
-    var randomLoopsCount = getRandomArbitrary(1, 5);
+    var randomLoopsCount = getRandomArbitrary(1, 1);
     for (var i = 0; i <= randomLoopsCount; i++) {
         var randomWallPositionNumber = getRandomArbitrary(0, frameLength - 50);
         var randomWallSize = getRandomArbitrary(30, Math.max(frameLength / (randomLoopsCount * 2) - 20, 30));
@@ -206,7 +206,6 @@ function renderGameFoods() {
     removeFoods();
     // generate fresh game foods
     var arr = generateGameFoods();
-    console.log(gameFoods, "game foods");
     // render new foods
     arr.forEach(function (food) {
         var foodEl = document.createElement("div");
@@ -328,8 +327,7 @@ function endTheGame() {
         title.innerHTML = "GAME IS OVER";
     }
     if (board) {
-        // TODO: will be enable after test, btw canshould be enable anytime
-        // board.innerHTML = "FAT IS BAD!";
+        board.innerHTML = "FAT IS BAD!";
     }
     if (box) {
         box.style.background = "red";
